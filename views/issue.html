@@ -6,70 +6,67 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="/public/style.css">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
   </head>
-  <body>
-    <header>
-      <h1 id='projectTitle'></h1>
+  <body class="bg-gray-100 max-w-screen-sm m-auto">
+    <header class="bg-blue-600 text-white p-4">
+      <h1 id='projectTitle' class="text-2xl font-bold"></h1>
     </header>
-    <center>
-      <div id='submitNewIssue'>
-        <br>
-        <h3>Submit a new issue:</h3>
+    <div class="container mx-auto mt-8">
+      <div id='submitNewIssue' class="bg-white p-6 rounded shadow-md">
+        <h3 class="text-xl font-semibold mb-4">Submit a new issue:</h3>
         <form id="newIssue" method="post" action="/api/">
-          <input type="text" name="issue_title" placeholder="*Title" style="width: 320px; margin-bottom: 3px;" required=''><br>
-          <textarea type="text" name="issue_text" placeholder="*Text" style="width: 320px; height: 100px;" required=''></textarea><br>
-          <input type="text" name="created_by" placeholder="*Created by" style="width: 100px" required=''>
-          <input type="text" name="assigned_to" placeholder="(opt)Assigned to" style="width: 100px">
-          <input type="text" name="status_text" placeholder="(opt)Status text" style="width: 100px"><br>
-          <button type="submit">Submit Issue</button>
+          <input type="text" name="issue_title" placeholder="*Title" class="w-full mb-3 p-2 border rounded" required>
+          <textarea name="issue_text" placeholder="*Text" class="w-full h-24 mb-3 p-2 border rounded" required></textarea>
+          <div class="flex space-x-3 mb-3">
+            <input type="text" name="created_by" placeholder="*Created by" class="flex-1 p-2 border rounded" required>
+            <input type="text" name="assigned_to" placeholder="(opt)Assigned to" class="flex-1 p-2 border rounded">
+            <input type="text" name="status_text" placeholder="(opt)Status text" class="flex-1 p-2 border rounded">
+          </div>
+          <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded">Submit Issue</button>
         </form>
       </div>
       
-      <div id='issueDisplay'></div>
+      <div id='issueDisplay' class="mt-8"></div>
       
-      <hr style='margin: 50px; margin-top: 200px'>
-    </center>
+      <hr class="my-12">
+    </div>
     
     <script src="https://code.jquery.com/jquery-2.2.1.min.js"
             integrity="sha256-gvQgAFzTH6trSrAWoH1iPo9Xc96QxSZ3feW6kem+O00="
             crossorigin="anonymous"></script>
     <script>
       $(function() {
-        let currentProject = window.location.pathname.replace(/\//g, "");;
-        let url = "/api/issues/"+currentProject;
-        $('#projectTitle').text('All issues for: '+currentProject)
+        let currentProject = window.location.pathname.replace(/\//g, "");
+        let url = "/api/issues/" + currentProject;
+        $('#projectTitle').text('All issues for: ' + currentProject);
         $.ajax({
           type: "GET",
           url: url,
-          success: function(data)
-          {
-            let issues= [];
+          success: function(data) {
+            let issues = [];
             data.forEach(function(ele) {
               console.log(ele);
-              let openstatus;
-              (ele.open) ? openstatus = 'open' : openstatus = 'closed';
+              let openstatus = ele.open ? 'open' : 'closed';
               let single = [
-                '<div class="issue '+openstatus+'">',
-                '<p class="id">id: '+ele._id+'</p>',
-                '<h3>'+ele.issue_title+' -  ('+openstatus+')</h3>',
-                '<br>',
-                '<p>'+ele.issue_text+'</p>',
-                '<p>'+ele.status_text+'</p>',
-                '<br>',
-                '<p class="id"><b>Created by:</b> '+ele.created_by+'  <b>Assigned to:</b> '+ele.assigned_to,
-                '<p class="id"><b>Created on:</b> '+ele.created_on+'  <b>Last updated:</b> '+ele.updated_on,
-                '<br><a href="#" class="closeIssue" id="'+ele._id+'">close?</a> <a href="#" class="deleteIssue" id="'+ele._id+'">delete?</a>',
+                '<div class="issue ' + openstatus + ' bg-white p-4 rounded shadow-md mb-4">',
+                '<p class="id text-gray-600">id: ' + ele._id + '</p>',
+                '<h3 class="text-xl font-semibold">' + ele.issue_title + ' -  (' + openstatus + ')</h3>',
+                '<p class="mt-2">' + ele.issue_text + '</p>',
+                '<p class="text-gray-600">' + ele.status_text + '</p>',
+                '<p class="id text-gray-600 mt-2"><b>Created by:</b> ' + ele.created_by + '  <b>Assigned to:</b> ' + ele.assigned_to + '</p>',
+                '<p class="id text-gray-600"><b>Created on:</b> ' + ele.created_on + '  <b>Last updated:</b> ' + ele.updated_on + '</p>',
+                '<div class="mt-4"><a href="#" class="closeIssue text-blue-600 mr-4" id="' + ele._id + '">close?</a> <a href="#" class="deleteIssue text-red-600" id="' + ele._id + '">delete?</a></div>',
                 '</div>'
-                
               ];
+              
               issues.push(single.join(''));
             });
             $('#issueDisplay').html(issues.join(''));
           }
         });
         
-        $('#newIssue').submit(function(e){
+        $('#newIssue').submit(function(e) {
           e.preventDefault();
           $(this).attr('action', "/api/issues/" + currentProject);
           $.ajax({
@@ -80,27 +77,28 @@
           });
         });
         
-        $('#issueDisplay').on('click','.closeIssue', function(e) {
-          let url = "/api/issues/"+currentProject;
+        $('#issueDisplay').on('click', '.closeIssue', function(e) {
+          let url = "/api/issues/" + currentProject;
           $.ajax({
             type: "PUT",
             url: url,
-            data: {_id: $(this).attr('id'), open: false},
+            data: { _id: $(this).attr('id'), open: false },
             success: function(data) { alert(data); window.location.reload(true); }
           });
           e.preventDefault();
         });
-        $('#issueDisplay').on('click','.deleteIssue', function(e) {
-          let url = "/api/issues/"+currentProject;
+        
+        $('#issueDisplay').on('click', '.deleteIssue', function(e) {
+          let url = "/api/issues/" + currentProject;
           $.ajax({
             type: "DELETE",
             url: url,
-            data: {_id: $(this).attr('id')},
+            data: { _id: $(this).attr('id') },
             success: function(data) { alert(data); window.location.reload(true); }
           });
           e.preventDefault();
         });
       });
-   </script>
+    </script>
   </body>
 </html>

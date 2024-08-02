@@ -1,25 +1,23 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
     <title>Issue Tracker</title>
     <link rel="icon" type="image/png" href="https://cdn.freecodecamp.org/universal/favicons/favicon-16x16.png" />
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="/public/style.css">
+    <script src="https://cdn.tailwindcss.com"></script>
   </head>
-  <body>
-    <header>
-      <h1>
-        Issue Tracker
-      </h1>
+  <body class="bg-gray-100 text-gray-900 max-w-screen-sm m-auto">
+    <header class="bg-blue-600 text-white p-4">
+      <h1 class="text-3xl font-bold">Issue Tracker</h1>
     </header>
-    <section style="margin: 0 50px;">
-      <h3>Example <code>GET</code> usage</h3>
-      <code>/api/issues/{project}</code><br>
-      <code>/api/issues/{project}?open=true&amp;assigned_to=Joe</code><br>
-      <h3>Example return</h3>
-      <pre>
+    <section class="m-12">
+      <h3 class="text-xl font-semibold mb-2">Example <code class="bg-gray-200 p-1 rounded">GET</code> usage</h3>
+      <code class="block bg-gray-200 p-2 rounded mb-2">/api/issues/{project}</code>
+      <code class="block bg-gray-200 p-2 rounded mb-4">/api/issues/{project}?open=true&amp;assigned_to=Joe</code>
+      <h3 class="text-xl font-semibold mb-2">Example return</h3>
+      <pre class="bg-gray-200 p-4 rounded">
 <code>[
   { 
     "_id": "5871dda29faedc3491ff93bb",
@@ -35,41 +33,41 @@
   ...
  ]
 </code>
-</pre>
+      </pre>
     </section>
-    <hr style='margin: 0 50px'>
-    <section id='testui' style='margin-left: 50px;'>
-      <h3>Examples</h3>
-      Go to <a href='/api/issues/apitest/'><code>/api/issues/apitest/</code></a>  project
-      <h2 style="text-align: left">API Tests</h2>
-      <h3>Submit issue on <i>apitest</i></h3>
-      <form id="testForm" class="border">
-        <input type="text" name="issue_title" placeholder="*Title" style="width: 100px" required=''><br>
-        <textarea type="text" name="issue_text" placeholder="*Text" style="width: 100px" required=''></textarea><br>
-        <input type="text" name="created_by" placeholder="*Created by" style="width: 100px" required=''><br>
-        <input type="text" name="assigned_to" placeholder="(opt)Assigned to" style="width: 100px"><br>
-        <input type="text" name="status_text" placeholder="(opt)Status text" style="width: 100px"><br>
-        <button type="submit">Submit Issue</button>
-      </form><br>
-      <h3>Update issue on <i>apitest</i> (Change any or all to update issue on the _id supplied)</h3>
-      <form id="testForm2" class="border">
-        <input type="text" name="_id" placeholder="*_id" style="width: 100px" required=''><br>
-        <input type="text" name="issue_title" placeholder="(opt)Title" style="width: 100px"><br>
-        <textarea type="text" name="issue_text" placeholder="(opt)Text" style="width: 100px"></textarea><br>
-        <input type="text" name="created_by" placeholder="(opt)Created by" style="width: 100px"><br>
-        <input type="text" name="assigned_to" placeholder="(opt)Assigned to" style="width: 100px"><br>
-        <input type="text" name="status_text" placeholder="(opt)Status text" style="width: 100px"><br>
-        <label><input type="checkbox" name="open" value="false"> Check to close issue</label><br>
-        <button type="submit">Submit Issue</button>
-      </form><br>
-      <h3>Delete issue on <i>apitest</i></h3>
-      <form id="testForm3" class="border">
-        <input type="text" name="_id" placeholder="_id" style="width: 100px" required=''><br>
-        <button type="submit">Delete Issue</button>
+    <hr class="mx-12">
+    <section id="testui" class="ml-12">
+      <h3 class="text-xl font-semibold mb-2">Examples</h3>
+      <p>Go to <a href="/api/issues/apitest/" class="text-blue-600 underline"><code class="bg-gray-200 p-1 rounded">/api/issues/apitest/</code></a> project</p>
+      <h2 class="text-2xl font-bold mt-4 mb-2">API Tests</h2>
+      <h3 class="text-xl font-semibold mb-2">Submit issue on <i>apitest</i></h3>
+      <form id="testForm" class="bg-white p-4 rounded shadow-md mb-4">
+        <input type="text" name="issue_title" placeholder="*Title" class="w-full p-2 border border-gray-300 rounded mb-2" required>
+        <textarea name="issue_text" placeholder="*Text" class="w-full p-2 border border-gray-300 rounded mb-2" required></textarea>
+        <input type="text" name="created_by" placeholder="*Created by" class="w-full p-2 border border-gray-300 rounded mb-2" required>
+        <input type="text" name="assigned_to" placeholder="(opt)Assigned to" class="w-full p-2 border border-gray-300 rounded mb-2">
+        <input type="text" name="status_text" placeholder="(opt)Status text" class="w-full p-2 border border-gray-300 rounded mb-2">
+        <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded">Submit Issue</button>
       </form>
-      <code id='jsonResult'></code>
+      <h3 class="text-xl font-semibold mb-2">Update issue on <i>apitest</i> (Change any or all to update issue on the _id supplied)</h3>
+      <form id="testForm2" class="bg-white p-4 rounded shadow-md mb-4">
+        <input type="text" name="_id" placeholder="*_id" class="w-full p-2 border border-gray-300 rounded mb-2" required>
+        <input type="text" name="issue_title" placeholder="(opt)Title" class="w-full p-2 border border-gray-300 rounded mb-2">
+        <textarea name="issue_text" placeholder="(opt)Text" class="w-full p-2 border border-gray-300 rounded mb-2"></textarea>
+        <input type="text" name="created_by" placeholder="(opt)Created by" class="w-full p-2 border border-gray-300 rounded mb-2">
+        <input type="text" name="assigned_to" placeholder="(opt)Assigned to" class="w-full p-2 border border-gray-300 rounded mb-2">
+        <input type="text" name="status_text" placeholder="(opt)Status text" class="w-full p-2 border border-gray-300 rounded mb-2">
+        <label class="block mb-2"><input type="checkbox" name="open" value="false" class="mr-2"> Check to close issue</label>
+        <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded">Submit Issue</button>
+      </form>
+      <h3 class="text-xl font-semibold mb-2">Delete issue on <i>apitest</i></h3>
+      <form id="testForm3" class="bg-white p-4 rounded shadow-md mb-4">
+        <input type="text" name="_id" placeholder="_id" class="w-full p-2 border border-gray-300 rounded mb-2" required>
+        <button type="submit" class="bg-red-600 text-white px-4 py-2 rounded">Delete Issue</button>
+      </form>
+      <code id="jsonResult" class="block bg-gray-200 p-4 rounded "></code>
     </section>
-    <hr style='margin: 50px; margin-top: 200px'>
+    <hr class="mx-12 my-16">
     <!-- Your web-app is https, so your scripts need to be too -->
     <script src="https://code.jquery.com/jquery-2.2.1.min.js"
             integrity="sha256-gvQgAFzTH6trSrAWoH1iPo9Xc96QxSZ3feW6kem+O00="
@@ -110,6 +108,6 @@
           e.preventDefault();
         });
       });
-   </script>
+    </script>
   </body>
 </html>
